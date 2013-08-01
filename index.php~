@@ -41,32 +41,31 @@ require_once('tent-markdown.php');
 				}
 				else { ?>
                 <?php
-					echo "<table style='margin: 0px; width: 100%;'>";
+					echo "";
 					foreach ($notebooks['posts'] as $notebook) {
 						$content = $notebook['content'];
-						echo "<tr>";
+						echo "";
 						if (!is_null($content['name'])) {
-							echo "<td><a href='index.php?notebook=".$notebook['id']."'>".$content['name']."</a></td>";
+							echo "<li><a href='index.php?notebook=".$notebook['id']."'>".$content['name']."</a>";
 							if (!is_null($content['description'])) {
-								echo "<td>".$content['description']."</td>";
+								echo "".$content['description']."";
 							}
 							else {
-								echo "<td></td>";
+								echo "";
 							}
-							echo "<td><a href='edit.php?notebook=".$notebook['id']."'>".Edit."</a></td>";
+							echo "<a style='float: right;' href='edit.php?notebook=".$notebook['id']."'>".Edit."</a>";
 							if (!is_null($content['description'])) {
-								echo "<td>".$content['description']."</td>";
+								echo "".$content['description']."";
 							}
 							else {
-								echo "<td></td>";
+								echo "";
 							}
-							echo "<td style='color: #cd0d00;'><a class='delete' href='task_handler.php?type=delete&id=".$notebook['id']."'><img src='img/delete.png' style='width: 8px;'></a></td>"; 
+							echo "<a class='delete' href='task_handler.php?type=delete&id=".$notebook['id']."'><img src='img/delete.png' style='width: 8px; float: right;'></a></li>"; 
 						}
-
+}
 						
-						echo "</tr>";
-					}
-					echo "</table>					<form align='center' method='post' action='task_handler.php?type=notebook'>
+
+					echo "<form align='center' method='post' action='task_handler.php?type=notebook'>
 						<input type='text' name='notebook_name' placeholder='Add new notebook' class='text' style='width: 70%'/>
 						<input type='submit' class='text' style='width: 20%;'>
 					</form></div>";
@@ -74,21 +73,22 @@ require_once('tent-markdown.php');
 				?>
 
 
+
                 		</div>
 
 				<div class='note-list'>
 
-				<div class="filters">Font-size / Font-family
-                <a class="javascript-nav" rel="leanModal" href="#new_post"><img src="img/createpost.png" style="margin-left: 20px; width: 28px;" alt="New post"></a>
-                <a class="javaless-nav" href="new_post_page.php"><img src="img/createpost.png" style="margin-left: 20px; width: 28px;" alt="New post"></a>
+				<div class="filters">
+                <a class="javascript-nav" rel="leanModal" href="#new_post" style="font-size: 32px;">+</a>
+                <a class="javaless-nav" href="new_post_page.php" style="font-size: 32px;">Create new note+</a>
                 </div>
 
 				<?php
 				if (!isset($_GET['notebook'])) {
 					unset($_SESSION['redirect_notebook']);
-					$mac = generate_mac('hawk.1.header', time(), $nonce, 'GET', '/posts?types=http%3A%2F%2Fcacauu.de%2FNoot%2Fnote%2Fv0.1', $entity_sub, '80', $_SESSION['client_id'], $_SESSION['hawk_key'], false);
+					$mac = generate_mac('hawk.1.header', time(), $nonce, 'GET', '/posts?types=http%3A%2F%2Fcacauu.de%2Fnoot%2Fnote%2Fv0.1', $entity_sub, '80', $_SESSION['client_id'], $_SESSION['hawk_key'], false);
 					$init = curl_init();
-					curl_setopt($init, CURLOPT_URL, $_SESSION['posts_feed_endpoint'].'?types=http%3A%2F%2Fcacauu.de%2FNoot%2Fnote%2Fv0.1');
+					curl_setopt($init, CURLOPT_URL, $_SESSION['posts_feed_endpoint'].'?types=http%3A%2F%2Fcacauu.de%2Fnoot%2Fnote%2Fv0.1');
 					curl_setopt($init, CURLOPT_HTTPGET, 1);
 					curl_setopt($init, CURLOPT_RETURNTRANSFER, 1);
 					curl_setopt($init, CURLOPT_HTTPHEADER, array(generate_auth_header($_SESSION['access_token'], $mac, time(), $nonce, $_SESSION['client_id']))); //Setting the HTTP header
@@ -130,9 +130,9 @@ require_once('tent-markdown.php');
 					$current_notebook = json_decode($current_notebook, true);
 
 					//Getting notes from the chosen notebook
-					$mac = generate_mac('hawk.1.header', time(), $nonce, 'GET', '/posts?types=http%3A%2F%2Fcacauu.de%2FNoot%2Fnote%2Fv0.1&mentions='.urlencode($_SESSION['entity_sub']).'+'.$_GET['notebook'], $entity_sub, '80', $_SESSION['client_id'], $_SESSION['hawk_key'], false);
+					$mac = generate_mac('hawk.1.header', time(), $nonce, 'GET', '/posts?types=http%3A%2F%2Fcacauu.de%2Fnoot%2Fnote%2Fv0.1&mentions='.urlencode($_SESSION['entity_sub']).'+'.$_GET['notebook'], $entity_sub, '80', $_SESSION['client_id'], $_SESSION['hawk_key'], false);
 					$init = curl_init();
-					curl_setopt($init, CURLOPT_URL, $_SESSION['posts_feed_endpoint'].'?types=http%3A%2F%2Fcacauu.de%2FNoot%2Fnote%2Fv0.1&mentions='.urlencode($_SESSION['entity_sub']).'+'.$_GET['notebook']);
+					curl_setopt($init, CURLOPT_URL, $_SESSION['posts_feed_endpoint'].'?types=http%3A%2F%2Fcacauu.de%2Fnoot%2Fnote%2Fv0.1&mentions='.urlencode($_SESSION['entity_sub']).'+'.$_GET['notebook']);
 					curl_setopt($init, CURLOPT_HTTPGET, 1);
 					curl_setopt($init, CURLOPT_RETURNTRANSFER, 1);
 					curl_setopt($init, CURLOPT_HTTPHEADER, array(generate_auth_header($_SESSION['access_token'], $mac, time(), $nonce, $_SESSION['client_id']))); //Setting the HTTP header
@@ -158,6 +158,7 @@ require_once('tent-markdown.php');
 				}
 				?>
         </div>
+        <div class="note-list" style="max-width: 700px;"> Hallo!</div>
 		<?php include('footer.php') ?>
 
 	</body>

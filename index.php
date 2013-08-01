@@ -28,7 +28,7 @@ require_once('tent-markdown.php');
 			<div class="container">
 				<div class="sidebar">
 				<h2>Notebooks</h2>
-                    <li><a href="index.php">All notebooks</a></li>
+                    <a href="index.php">All notebooks</a>
 
 
 				<?php 
@@ -53,21 +53,21 @@ require_once('tent-markdown.php');
 							else {
 								echo "";
 							}
-							echo "<a style='float: right;' href='edit.php?notebook=".$notebook['id']."'>".Edit."</a>";
+							echo "<a style='float: right;' href='edit.php?notebook=".$notebook['id']."'>".E."</a>";
 							if (!is_null($content['description'])) {
 								echo "".$content['description']."";
 							}
 							else {
 								echo "";
 							}
-							echo "<a class='delete' href='task_handler.php?type=delete&id=".$notebook['id']."'><img src='img/delete.png' style='width: 8px; float: right;'></a></li>"; 
+							echo "<a class='delete' href='task_handler.php?type=delete&id=".$notebook['id']."'><img src='img/delete.png' style='width: 8px; float: right; margin: 3px;'></a></li>"; 
 						}
 }
 						
 
-					echo "<form align='center' method='post' action='task_handler.php?type=notebook'>
+					echo "<form align='center' method='post' action='task_handler.php?type=notebook' style='margin-top: 30px;'>
 						<input type='text' name='notebook_name' placeholder='Add new notebook' class='text' style='width: 70%'/>
-						<input type='submit' class='text' style='width: 20%;'>
+						<input type='submit' class='text' style='width: 28%;'>
 					</form></div>";
 					}
 				?>
@@ -76,11 +76,11 @@ require_once('tent-markdown.php');
 
                 		</div>
 
-				<div class='note-list'>
+				<div class='note-list' style="height: 100%;">
 
-				<div class="filters">Font-size / Font-family
-                <a class="javascript-nav" rel="leanModal" href="#new_post" style="font-size: 32px;">+</a>
-                <a class="javaless-nav" href="new_post_page.php" style="font-size: 32px;">+</a>
+				<div class="filters">
+                <a class="javascript-nav" rel="leanModal" href="#new_post" style="font-size: 16px;">Create new note +</a>
+                <a class="javaless-nav" href="new_post_page.php" style="font-size: 16px;">Create new note +</a>
                 </div>
 
 				<?php
@@ -158,7 +158,41 @@ require_once('tent-markdown.php');
 				}
 				?>
         </div>
-        <div class="note-list" style="max-width: 700px;"> Hallo!</div>
+        <div class="note-list" style="max-width: 700px; height: 100%;">
+				<div class="filters" style='max-width: 674px;'></div>
+				<?php
+				if (!isset($_GET['notebook'])) {
+					unset($_SESSION['redirect_notebook']);
+					$mac = generate_mac('hawk.1.header', time(), $nonce, 'GET', '/posts?types=http%3A%2F%2Fcacauu.de%2Fnoot%2Fnote%2Fv0.1', $entity_sub, '80', $_SESSION['client_id'], $_SESSION['hawk_key'], false);
+					$init = curl_init();
+					curl_setopt($init, CURLOPT_URL, $_SESSION['posts_feed_endpoint'].'?types=http%3A%2F%2Fcacauu.de%2Fnoot%2Fnote%2Fv0.1');
+					curl_setopt($init, CURLOPT_HTTPGET, 1);
+					curl_setopt($init, CURLOPT_RETURNTRANSFER, 1);
+					curl_setopt($init, CURLOPT_HTTPHEADER, array(generate_auth_header($_SESSION['access_token'], $mac, time(), $nonce, $_SESSION['client_id']))); //Setting the HTTP header
+					$posts = curl_exec($init);
+					curl_close($init);
+					$posts = json_decode($posts, true);
+					echo "<table>";
+					foreach ($posts['posts'] as $note) {
+						$content = $note['content'];
+						echo "<tr class='".$content['status']."'>";
+
+						echo "<td><a class='edit' href='edit.php?type=update&id=".$note['id']."'>".$content['title'];
+
+						if ($content['notes'] != '' AND !is_null($content['notes'])) {
+							echo "<br><i><div style='font-size: 11px;'>".Tent_Markdown($content['notes'])."</div></i></a></td>";
+						}
+						else {
+							echo "</td>";
+						}
+
+						/* echo "<td style='color: #cd0d00;'><a class='delete' href='task_handler.php?type=delete&id=".$note['id']."'><img src='img/delete.png'></a></td>"; */
+						echo "</tr>";
+					}
+					echo "</table></div>";
+				}
+                ?>
+</div>
 		<?php include('footer.php') ?>
 
 	</body>
