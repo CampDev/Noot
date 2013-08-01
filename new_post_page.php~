@@ -21,9 +21,9 @@ $entity_sub = $_SESSION['entity_sub'];
 <div class="container">
  <?php include_once('header.php') ?>
 <div id="new-task">
-				<h2>Create a new note</h2>
+				<h2>Create a new task</h2>
 				<form align="center" action="task_handler.php?type=task" method="post">
-					<p><input type="text" name="title" placeholder="Title" class="text" /></p>
+					<p><input type="text" name="title" placeholder="Your awesome task" class="text" /></p>
 					<p><select name="list" class="select">
 						<?php
 						foreach ($lists['posts'] as $list) {
@@ -43,7 +43,15 @@ $entity_sub = $_SESSION['entity_sub'];
 						}
 						?>
 					</select>
-					<p><textarea name="notes" placeholder="Notes" class="note"></textarea> </p>
+					<select name="priority" size="1" class="select">
+						<option value="0">Low</option>
+						<option SELECTED value="1">Average</option>
+						<option value="2">High</option>
+						<option value="3">Urgent</option>
+					</select>
+					<input type="date" min="<?php echo date('Y-m-d', time()); ?>" name="duedate" class="select">
+                    </p>
+					<p><textarea name="notes" placeholder="Add a description" class="note"></textarea> </p>
 					<p>You can use <a href="https://tent.io/docs/post-types#markdown">Tent-flavored Markdown</a> in your notes to add links and style to the text</p>					<p><input type="submit"></p>
 				</form>
 </div>

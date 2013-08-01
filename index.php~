@@ -27,61 +27,23 @@ require_once('tent-markdown.php');
 
 			<div class="container">
 				<div class="sidebar">
-				<h2>Notebooks</h2>
-                    <li><a href="index.php">All notebooks</a></li>
 
-
-				<?php 
-				if ($lists['posts'] == '' OR $lists['posts'] == array()) {
-					echo "No lists, create one!"; ?>
-				<?php
-				}
-				elseif (isset($posts['error'])) {
-					echo "<h3 style='color: red;'>Error: ".$posts['error']."</h3>";
-				}
-				else { ?>
-                <?php
-					echo "<table style='margin: 0px; width: 100%;'>";
-					foreach ($lists['posts'] as $list) {
-						$content = $list['content'];
-						echo "<tr>";
-						if (!is_null($content['name'])) {
-							echo "<td><a href='index.php?list=".$list['id']."'>".$content['name']."</a></td>";
-							if (!is_null($content['description'])) {
-								echo "<td>".$content['description']."</td>";
-							}
-							else {
-								echo "<td></td>";
-							}
-							echo "<td><a href='edit.php?list=".$list['id']."'>".Edit."</a></td>";
-							if (!is_null($content['description'])) {
-								echo "<td>".$content['description']."</td>";
-							}
-							else {
-								echo "<td></td>";
-							}
-							echo "<td style='color: #cd0d00;'><a class='delete' href='task_handler.php?type=delete&id=".$list['id']."'><img src='img/delete.png' style='width: 8px;'></a></td>"; 
-						}
-
-						
-						echo "</tr>";
-					}
-					echo "</table>					<form align='center' method='post' action='task_handler.php?type=list'>
-						<input type='text' name='list_name' placeholder='Add new list' class='text' style='width: 70%'/>
-						<input type='submit' class='text' style='width: 20%;'>
-					</form></div>";
-					}
-				?>
-
-
+                	<b>Quick views</b><hr>
+                	All tasks<br>
+                    Inbox<br>
+                	Due today<br>
+                	Upcoming<br>
+                	Calendar<br>
+                	<br>
+                	<b>People</b><hr>Sort tasks by those who are involved<br>
+                	<br>
+                	<b>Labels</b><hr>Sort tasks by labels<br></br>
                 		</div>
 
 				<div class='task-list'>
 
-				<div class="filters">Font-size / Font-family
-                <a class="javascript-nav" rel="leanModal" href="#new_post"><img src="img/createpost.png" style="margin-left: 20px; width: 28px;" alt="New post"></a>
-                <a class="javaless-nav" href="new_post_page.php"><img src="img/createpost.png" style="margin-left: 20px; width: 28px;" alt="New post"></a>
-                </div>
+				<div class="filters">Priority / title / deadline / status
+</div>
 
 				<?php
 				if (!isset($_GET['list'])) {
@@ -100,16 +62,45 @@ require_once('tent-markdown.php');
 						$content = $task['content'];
 						echo "<tr class='".$content['status']."'>";
 
+                    	if (isset($content['priority'])) {
+                    		echo "<td style='width: 10px;'><div class='prio_".$content['priority']."'></div></td>";
+                    	}
+                  		else {
+                  			echo "<td></td>";
+                  		}
+
 						echo "<td><a class='edit' href='edit.php?type=update&id=".$task['id']."'>".$content['title'];
 
-						/* if ($content['notes'] != '' AND !is_null($content['notes'])) {
+						if ($content['notes'] != '' AND !is_null($content['notes'])) {
 							echo "<br><i><div style='font-size: 11px;'>".Tent_Markdown($content['notes'])."</div></i></a></td>";
 						}
 						else {
 							echo "</td>";
-						} */
+						}
 
-						/* echo "<td style='color: #cd0d00;'><a class='delete' href='task_handler.php?type=delete&id=".$task['id']."'><img src='img/delete.png'></a></td>"; */
+						if (isset($content['duedate']) AND $content['duedate'] != '') {
+							if (date('d/M/Y', $content['duedate']) == date('d/M/Y', time())) {
+								echo "<td style='color: cd0d00;'>Today</td>";
+							}
+							else {
+								echo "<td>".date('d/M/Y', $content['duedate'])."</td>";
+							}
+						}
+						else {
+							echo "<td></td>";
+						}
+
+						if (isset($content['status']) AND $content['status'] == 'To Do' OR $content['status'] == 'todo') {
+							echo "<td style='color: #219807;'><a href='task_handler.php?type=complete&id=".$task['id']."&parent=".$task['version']['id']."'><img src='img/unchecked.png'></a></td>";	
+						}
+						elseif (isset($content['status']) AND $content['status'] == 'Done' OR $content['status'] == 'done') {
+							echo "<td style='color: #aaa;'><a href='task_handler.php?type=uncomplete&id=".$task['id']."&parent=".$task['version']['id']."'><img src='img/checked.png'></a></td>";	
+						}
+						else {
+							echo "<td></td>";
+						}
+
+						echo "<td style='color: #cd0d00;'><a class='delete' href='task_handler.php?type=delete&id=".$task['id']."'><img src='img/delete.png'></a></td>";
 						echo "</tr>";
 					}
 					echo "</table></div>";
@@ -145,9 +136,45 @@ require_once('tent-markdown.php');
 							$content = $task['content'];
 							echo "<tr class='".$content['status']."'>";
 
+                    		if (isset($content['priority'])) {
+                    			echo "<td style='width: 10px;'><div class='prio_".$content['priority']."'></div></td>";
+                    		}
+                  			else {
+                  				echo "<td></td>";
+                  			}
+
 							echo "<td><a class='edit' href='edit.php?type=update&id=".$task['id']."'>".$content['title'];
 
-							/* echo "<td style='color: #cd0d00;'><a class='delete' href='task_handler.php?type=delete&id=".$task['id']."'><img src='img/delete.png'></a></td>"; */
+							if ($content['notes'] != '' AND !is_null($content['notes'])) {
+								echo "<br><i><div style='font-size: 11px;'>".Tent_Markdown($content['notes'])."</div></i></a></td>";
+							}
+							else {
+								echo "</td>";
+							}
+
+							if (isset($content['duedate']) AND $content['duedate'] != '') {
+								if (date('d/M/Y', $content['duedate']) == date('d/M/Y', time())) {
+									echo "<td style='color: cd0d00;'>Today</td>";
+								}
+								else {
+									echo "<td>".date('d/M/Y', $content['duedate'])."</td>";
+								}
+							}
+							else {
+								echo "<td></td>";
+							}
+
+							if (isset($content['status']) AND $content['status'] == 'To Do' OR $content['status'] == 'todo') {
+								echo "<td style='color: #219807;'><a href='task_handler.php?type=complete&id=".$task['id']."&parent=".$task['version']['id']."'><img src='img/unchecked.png'></a></td>";	
+							}
+							elseif (isset($content['status']) AND $content['status'] == 'Done') {
+								echo "<td style='color: #aaa;'><a href='task_handler.php?type=uncomplete&id=".$task['id']."&parent=".$task['version']['id']."'><img src='img/checked.png'></a></td>";	
+							}
+							else {
+								echo "<td></td>";
+							}
+
+							echo "<td style='color: #cd0d00;'><a class='delete' href='task_handler.php?type=delete&id=".$task['id']."'><img src='img/delete.png'></a></td>";
 							echo "</tr>";
 						}
 						echo "</table>";

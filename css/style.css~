@@ -146,7 +146,7 @@ div.sidebar {
 }
 
 div.header {
-    background: #2BB636;
+    background: #3D6AA2;
     width: 100%;
     height: 50px;
     color: white;
@@ -159,6 +159,18 @@ div.header {
 #header-inner a:hover {
     color: white;
     text-decoration: underline;
+}
+
+select.header-dropdown {
+    height: 50px;
+    width: 220px;
+    background: #386194;
+    border: none;
+    color: white;
+    padding: 10px;
+    -webkit-appearance: none;
+    font-size: 16px;
+    float: left;
 }
 
 div.header-navigation {
@@ -179,7 +191,7 @@ div.padded-container {
 
 div.task-list {
     float: left;
-    max-width: 300px;
+    max-width: 750px;
     width: 100%;
 }
 

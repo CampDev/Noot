@@ -19,31 +19,9 @@
         <div class="header">
         <div class="container">
             <div id="header-inner">
-                <select class="header-dropdown"
-                    onchange="location = this.options[this.selectedIndex].value;">
-                    <option SELECTED value="">Choose a list</option>
-                    <option value="index.php">All Lists</option>
-                    <?php foreach ($lists['posts'] as $list) {
-                        if (isset($_GET['list'])) {
-                            if ($list['id'] == $_GET['list']) {
-                                echo "<option SELECTED value='index.php?list=".$list['id']."'>".$list['content']['name']."</option>";
-                            }
-                            else {
-                                echo "<option value='index.php?list=".$list['id']."'>".$list['content']['name']."</option>";
-                            }
-                        }
-                        else {
-                            if(!is_null($list['content']['name'])) {
-                                echo "<option value='index.php?list=".$list['id']."'>".$list['content']['name']."</option>";
-                            }
-                        }
-                    } ?>
-                </select>
+
 <div class="header-navigation">
-                <a class="javascript-nav" rel="leanModal" href="#new_post"><img src="img/createpost.png" style="margin-left: 20px; width: 28px;" alt="New post"></a>
-                <a class="javascript-nav" rel="leanModal" href="#list_management"><img src="img/list.png" style="margin-left: 20px; width: 28px;" alt="List management"></a>
-                <a class="javaless-nav" href="new_post_page.php"><img src="img/createpost.png" style="margin-left: 20px; width: 28px;" alt="New post"></a>
-                <a class="javaless-nav" href="list.php"><img src="img/list.png" style="margin-left: 20px; width: 28px;" alt="List management"></a>
+                <span style="font-size: 32px;">Noot</span>
 <!-- <img src="" style="width: 40px; height: 40px; margin-top: -5px; float: right;"> -->
                 <?php } ?>
 </div>
