@@ -8,7 +8,7 @@ $entity_sub = $_SESSION['entity_sub'];
 ?>
 <html>
 	<head>
-		<title>Tasky</title>
+		<title>Noot</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		<link rel="stylesheet" type="text/css" href="css/style.css">
 		<script type="text/javascript" src="live.js"></script>
@@ -20,24 +20,24 @@ $entity_sub = $_SESSION['entity_sub'];
 
 <div class="container">
  <?php include_once('header.php') ?>
-<div id="new-task">
+<div id="new-note">
 				<h2>Create a new note</h2>
-				<form align="center" action="task_handler.php?type=task" method="post">
+				<form align="center" action="task_handler.php?type=note" method="post">
 					<p><input type="text" name="title" placeholder="Title" class="text" /></p>
-					<p><select name="list" class="select">
+					<p><select name="notebook" class="select">
 						<?php
-						foreach ($lists['posts'] as $list) {
-							if(!is_null($list['content']['name'])) {
-								if (isset($_GET['list'])) {
-									if ($list['id'] == $_GET['list']) {
-										echo "<option SELECTED value='".$list['id']."'>".$list['content']['name']."</option>";
+						foreach ($notebooks['posts'] as $notebook) {
+							if(!is_null($notebook['content']['name'])) {
+								if (isset($_GET['notebook'])) {
+									if ($notebook['id'] == $_GET['notebook']) {
+										echo "<option SELECTED value='".$notebook['id']."'>".$notebook['content']['name']."</option>";
 									}
 									else {
-										echo "<option value='".$list['id']."'>".$list['content']['name']."</option>";
+										echo "<option value='".$notebook['id']."'>".$notebook['content']['name']."</option>";
 									}
 								}
 								else {
-									echo "<option value='".$list['id']."'>".$list['content']['name']."</option>";
+									echo "<option value='".$notebook['id']."'>".$notebook['content']['name']."</option>";
 								}
 							}
 						}

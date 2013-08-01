@@ -15,7 +15,7 @@ require_once('functions.php');
 			$time = time();
 
 			$oauth_url = $entity."oauth/authorization";
-			$nonce = uniqid('Tasky_', true); //Generating the nonce TODO: Use a PHP library to do that more secure
+			$nonce = uniqid('Noot_', true); //Generating the nonce TODO: Use a PHP library to do that more secure
 			$mac = generate_mac('hawk.1.header', $time, $nonce, 'POST', '/oauth/authorization', $entity_sub, '80', $_SESSION['client_id'], $_SESSION['hawk_key'], false);
 
 			//Building the post data

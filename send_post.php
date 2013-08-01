@@ -26,16 +26,16 @@ require_once('functions.php');
 						//Create an essay
 						break;
 		
-						case 'list':
+						case 'notebook':
 						if (isset($_GET['description'])) {
 							$description = $_GET['description'];
 						}
 						else {
 							$description = '';
 						}
-						$type = 'http://cacauu.de/tasky/list/v0.1';
+						$type = 'http://cacauu.de/noot/notebook/v0.1';
 						$post_raw = array(
-							'type' => 'http://cacauu.de/tasky/list/v0.1#',
+							'type' => 'http://cacauu.de/noot/notebook/v0.1#',
 							'permissions' => array(
 								'public' => false,
 							),
@@ -51,13 +51,13 @@ require_once('functions.php');
 						break;
 		
 						default:
-						//Create a task
+						//Create a note
 					}
 				}
 			elseif (isset($_POST['title']) && isset($_POST['priority'])) {
-				$type = 'http://cacauu.de/tasky/task/v0.1';
+				$type = 'http://cacauu.de/noot/note/v0.1';
 				$post_raw = array(
-					'type' => 'http://cacauu.de/tasky/task/v0.1#todo',
+					'type' => 'http://cacauu.de/noot/note/v0.1#todo',
 					'permissions' => array(
 						'public' => false,
 					),
@@ -65,12 +65,12 @@ require_once('functions.php');
 						'title' => $_POST['title'],
 						'priority' => $_POST['priority'],
 						'note' => $_POST['notes'],
-						'list' => $_POST['list'],
+						'notebook' => $_POST['notebook'],
 						'status' => 'To Do',
 					),
 					'mentions' => array(
 						array(
-							'post' => $_POST['list'],
+							'post' => $_POST['notebook'],
 						),
 					),
 				);
@@ -81,7 +81,7 @@ require_once('functions.php');
 			echo $post_data;
 
 			$time = time();
-			$nonce = uniqid('Tasky_', true); //Generating the nonce TODO: Use a PHP library to do that more secure
+			$nonce = uniqid('Noot_', true); //Generating the nonce TODO: Use a PHP library to do that more secure
 
 			//Generating the MAC for the request
 			$entity = $_SESSION['entity'];

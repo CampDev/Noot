@@ -1,5 +1,5 @@
 <?php
-//All the functions used in Tasky
+//All the functions used in Noot
 //Functions to parse the header to an array
 if (!function_exists('http_parse_headers')) {
     function http_parse_headers($headers){
