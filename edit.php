@@ -59,47 +59,6 @@ require_once('functions.php');
 						?>
 					</select>
 
-					<select name="priority" size="1" class="select">
-						<?php
-							switch ($current_note['post']['content']['priority']) {
-								case '0':
-									echo "<option SELECTED value='0'>Low</option>";
-									echo "<option value='1'>Average</option>";
-									echo "<option value='2'>High</option>";
-									echo "<option value='3'>Urgent</option>";
-									break;
-
-								case '1':
-									echo "<option value='0'>Low</option>";
-									echo "<option SELECTED value='1'>Average</option>";
-									echo "<option value='2'>High</option>";
-									echo "<option value='3'>Urgent</option>";
-									break;
-
-								case '2':
-									echo "<option value='0'>Low</option>";
-									echo "<option value='1'>Average</option>";
-									echo "<option SELECTED value='2'>High</option>";
-									echo "<option value='3'>Urgent</option>";
-									break;
-
-								case '3':
-									echo "<option value='0'>Low</option>";
-									echo "<option value='1'>Average</option>";
-									echo "<option value='2'>High</option>";
-									echo "<option SELECTED value='3'>Urgent</option>";
-									break;
-								
-								default: //Shouldn't happen
-									echo "<option value='0'>Low</option>";
-									echo "<option SELECTED value='1'>Average</option>";
-									echo "<option value='2'>High</option>";
-									echo "<option value='3'>Urgent</option>";
-									break;
-							}
-						?>
-					</select>
-					<input type="date" name="duedate" min="<?php echo date('Y-m-d', time()); ?>" <?php if(!is_null($current_note['post']['content']['duedate']) AND isset($current_note['post']['content']['duedate']) AND $current_note['post']['content']['duedate'] != '') {echo 'value="'.date('Y-m-d', $current_note['post']['content']['duedate']).'"';} ?>" class="select"> 
 					<p><textarea name="notes" class="note"><?php if(!is_null($current_note['post']['content']['notes'])) {echo $current_note['post']['content']['notes'];} ?></textarea></p>
 					<p>You can use <a href="https://tent.io/docs/post-types#markdown">Tent-flavored Markdown</a> in your notes to add links and style to the text</p>
 					<p><input type="submit"></p>

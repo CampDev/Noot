@@ -21,7 +21,7 @@
             <div id="header-inner">
 
 <div class="header-navigation">
-                <span style="font-size: 32px;">Noot</span>
+                <span style="font-size: 32px; font-family: 'Tangerine', sans-serif;">Noot</span>
 <!-- <img src="" style="width: 40px; height: 40px; margin-top: -5px; float: right;"> -->
                 <?php } ?>
 </div>
