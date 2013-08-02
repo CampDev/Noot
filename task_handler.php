@@ -144,12 +144,7 @@
 						'type' => 'http://cacauu.de/noot/note/v0.1#'.$_POST['status'],
 						'content' => array(
 							'title' => $_POST['title'],
-							'status' => $_POST['status'],
-							'priority' => $_POST['priority'],
-							'notebook' => $_POST['notebook'],
-							'assignee' => '',
-							'duedate' => strtotime($_POST['duedate']),
-							'notes' => $_POST['notes'],
+							'body' => $_POST['body'],
 						),
 						'version' => array(
 							'parents' => array(
@@ -166,6 +161,10 @@
 							),
 						),
 					);
+					var_export($_POST);
+					echo "<hr />";
+					var_export($updated_post_raw);
+					echo "<hr/>";
 					$updated_post = json_encode($updated_post_raw);
 					$mac = generate_mac('hawk.1.header', time(), $nonce, 'PUT', '/posts/'.urlencode($entity_sub)."/".$id, $_SESSION['entity_sub'], '80', $_SESSION['client_id'], $_SESSION['hawk_key'], false);
 					$ch = curl_init();
@@ -175,6 +174,7 @@
 					curl_setopt($ch, CURLOPT_POSTFIELDS, $updated_post);
 					curl_setopt($ch, CURLOPT_HTTPHEADER, array(generate_auth_header($_SESSION['access_token'], $mac, time(), $nonce, $_SESSION['client_id'])."\n".'Content-Type: application/vnd.tent.post.v0+json; type="http://cacauu.de/noot/note/v0.1#'.$_POST['status'].'"'));
 					$update_note = curl_exec($ch);
+					var_export($update_note);
 					curl_close($ch);
 					if (!isset($update_note['error'])) {
 						header('Location: '.$redirect_url);
@@ -251,23 +251,19 @@
 
 				case 'note':
 					$post_raw = array(
-						'type' => 'http://cacauu.de/noot/note/v0.1#todo',
+						'type' => 'http://cacauu.de/noot/note/v0.1#',
 						'permissions' => array(
 							'public' => false,
 						),
 						'content' => array(
 							'title' => $_POST['title'],
-							'priority' => $_POST['priority'],
-							'notes' => $_POST['notes'],
-							'notebook' => $_POST['notebook'],
-							'status' => 'To Do',
-							'duedate' => strtotime($_POST['duedate']),
+							'body' => $_POST['body'],
 						),
 						'mentions' => array(
 							array(
 								'entity' => $_SESSION['entity_sub'],
 								'post' => $_POST['notebook'],
-								'type' => 'http://cacauu.de/noot/note/v0.1#todo',
+								'type' => 'http://cacauu.de/noot/note/v0.1#',
 							),
 						),
 					);
@@ -277,7 +273,7 @@
 					$mac_send = generate_mac('hawk.1.header', time(), $nonce, 'POST', '/posts', $entity_sub_note, '80', $_SESSION['client_id'], $_SESSION['hawk_key'], false);
 					$ch = curl_init();
 					curl_setopt($ch, CURLOPT_URL, $_SESSION['new_post_endpoint']);
-					curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: Hawk id="'.$_SESSION['access_token'].'", mac="'.$mac_send.'", ts="'.time().'", nonce="'.$nonce.'", app="'.$_SESSION['client_id'].'"'."\n".'Content-Type: application/vnd.tent.post.v0+json; type="http://cacauu.de/noot/note/v0.1#todo"')); //Setting the HTTP header
+					curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: Hawk id="'.$_SESSION['access_token'].'", mac="'.$mac_send.'", ts="'.time().'", nonce="'.$nonce.'", app="'.$_SESSION['client_id'].'"'."\n".'Content-Type: application/vnd.tent.post.v0+json; type="http://cacauu.de/noot/note/v0.1#"')); //Setting the HTTP header
 					curl_setopt($ch, CURLOPT_POST, 1);
 					curl_setopt($ch, CURLOPT_POSTFIELDS, $post_json);
 					curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -296,7 +292,6 @@
 						),
 						'content' => array(
 							'name' => $_POST['notebook_name'],
-							'description' => '',
 						)
 					);
 					$post_json = json_encode($post_raw);

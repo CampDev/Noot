@@ -43,7 +43,7 @@ $entity_sub = $_SESSION['entity_sub'];
 						}
 						?>
 					</select>
-					<p><textarea name="notes" placeholder="Notes" class="note"></textarea> </p>
+					<p><textarea name="body" placeholder="Notes" class="note"></textarea> </p>
 					<p>You can use <a href="https://tent.io/docs/post-types#markdown">Tent-flavored Markdown</a> in your notes to add links and style to the text</p>					<p><input type="submit"></p>
 				</form>
 </div>
