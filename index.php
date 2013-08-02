@@ -100,7 +100,7 @@ require_once('tent-markdown.php');
 						$content = $note['content'];
 						echo "<tr class='".$content['status']."'>";
 
-						echo "<td><a class='edit' href='edit.php?type=update&id=".$note['id']."'>".$content['title'];
+						echo "<td><a href='index.php?note=".$note['id']."'>".$content['title']."</a>";
 
 						/* if ($content['notes'] != '' AND !is_null($content['notes'])) {
 							echo "<br><i><div style='font-size: 11px;'>".Tent_Markdown($content['notes'])."</div></i></a></td>";
@@ -145,7 +145,7 @@ require_once('tent-markdown.php');
 							$content = $note['content'];
 							echo "<tr class='".$content['status']."'>";
 
-							echo "<td><a class='edit' href='edit.php?type=update&id=".$note['id']."'>".$content['title'];
+						    echo "<td><a href='index.php?note=".$note['id']."'>".$content['title']."</a>";
 
 							/* echo "<td style='color: #cd0d00;'><a class='delete' href='task_handler.php?type=delete&id=".$note['id']."'><img src='img/delete.png'></a></td>"; */
 							echo "</tr>";
@@ -160,38 +160,53 @@ require_once('tent-markdown.php');
         </div>
         <div class="note-list" style="max-width: 700px; height: 100%;">
 				<div class="filters" style='max-width: 674px;'></div>
-				<?php
-				if (!isset($_GET['notebook'])) {
-					unset($_SESSION['redirect_notebook']);
-					$mac = generate_mac('hawk.1.header', time(), $nonce, 'GET', '/posts?types=http%3A%2F%2Fcacauu.de%2Fnoot%2Fnote%2Fv0.1', $entity_sub, '80', $_SESSION['client_id'], $_SESSION['hawk_key'], false);
+
+        <!-- experimental -->
+                    <?php if (isset($_GET['note'])) {
+					$_SESSION['redirect_note'] = $_GET['note'];
+					$id = $_GET['note'];
+					$entity_sub_notebook = substr_replace($_SESSION['entity'] ,"",-1);
+					$current_url = str_replace("{entity}", urlencode($entity_sub_notebook), $_SESSION['single_post_endpoint']);
+					$current_url = str_replace("{post}", $id, $current_url);
+					$mac_current = generate_mac('hawk.1.header', time(), $nonce, 'GET', '/posts/'.urlencode($entity_sub_notebook)."/".$id, $_SESSION['entity_sub'], '80', $_SESSION['client_id'], $_SESSION['hawk_key'], false);
+					$ch_current = curl_init();
+					curl_setopt($ch_current, CURLOPT_URL, $current_url);
+					curl_setopt($ch_current, CURLOPT_RETURNTRANSFER, 1);
+					curl_setopt($ch_current, CURLOPT_HTTPHEADER, array(generate_auth_header($_SESSION['access_token'], $mac_current, time(), $nonce, $_SESSION['client_id'])));
+					$current_notebook = curl_exec($ch_current);
+					curl_close($ch_current);
+					$current_notebook = json_decode($current_notebook, true);
+
+					//Getting notes from the chosen notebook
+					$mac = generate_mac('hawk.1.header', time(), $nonce, 'GET', '/posts?types=http%3A%2F%2Fcacauu.de%2Fnoot%2Fnote%2Fv0.1&mentions='.urlencode($_SESSION['entity_sub']).'+'.$_GET['note'], $entity_sub, '80', $_SESSION['client_id'], $_SESSION['hawk_key'], false);
 					$init = curl_init();
-					curl_setopt($init, CURLOPT_URL, $_SESSION['posts_feed_endpoint'].'?types=http%3A%2F%2Fcacauu.de%2Fnoot%2Fnote%2Fv0.1');
+					curl_setopt($init, CURLOPT_URL, $_SESSION['posts_feed_endpoint'].'?types=http%3A%2F%2Fcacauu.de%2Fnoot%2Fnote%2Fv0.1&mentions='.urlencode($_SESSION['entity_sub']).'+'.$_GET['note']);
 					curl_setopt($init, CURLOPT_HTTPGET, 1);
 					curl_setopt($init, CURLOPT_RETURNTRANSFER, 1);
 					curl_setopt($init, CURLOPT_HTTPHEADER, array(generate_auth_header($_SESSION['access_token'], $mac, time(), $nonce, $_SESSION['client_id']))); //Setting the HTTP header
 					$posts = curl_exec($init);
 					curl_close($init);
 					$posts = json_decode($posts, true);
-					echo "<table>";
-					foreach ($posts['posts'] as $note) {
-						$content = $note['content'];
-						echo "<tr class='".$content['status']."'>";
+					if ($posts['posts'] != array()) {
+						echo "<table>";
+						foreach ($posts['posts'] as $note) {
+							$content = $note['content'];
+							echo "<tr class='".$content['status']."'>";
 
-						echo "<td><a class='edit' href='edit.php?type=update&id=".$note['id']."'>".$content['title'];
+						    echo "<td><a href='index.php?note=".$note['id']."'>".$content['title']."</a>";
 
-						if ($content['notes'] != '' AND !is_null($content['notes'])) {
-							echo "<br><i><div style='font-size: 11px;'>".Tent_Markdown($content['notes'])."</div></i></a></td>";
+							/* echo "<td style='color: #cd0d00;'><a class='delete' href='task_handler.php?type=delete&id=".$note['id']."'><img src='img/delete.png'></a></td>"; */
+							echo "</tr>";
 						}
-						else {
-							echo "</td>";
-						}
-
-						/* echo "<td style='color: #cd0d00;'><a class='delete' href='task_handler.php?type=delete&id=".$note['id']."'><img src='img/delete.png'></a></td>"; */
-						echo "</tr>";
+						echo "</table>";
 					}
-					echo "</table></div>";
+					else {
+						echo "<h2>No notes in \"".$current_notebook['post']['content']['name']."\"</h2>";
+					}
 				}
-                ?>
+				?>
+        <!-- experimental -->
+
 </div>
 		<?php include('footer.php') ?>
 
