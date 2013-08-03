@@ -52,7 +52,7 @@ require_once('tent-markdown.php');
 						$content = $notebook['content'];
 						echo "";
 						if (!is_null($content['name'])) {
-							echo "<div style='width: 90%; padding: 5%; border-bottom: 1px solid #ddd;'><img src='img/notebook.png' style='width: 16px; margin-right: 5px; margin-bottom: -3px;'><a href='index.php?notebook=".$notebook['id']."'>".$content['name']."</a>";
+							echo "<div style='width: 90%; padding: 5%;'><img src='img/notebook.png' style='width: 16px; margin-right: 5px; margin-bottom: -3px;'><a href='index.php?notebook=".$notebook['id']."'>".$content['name']."</a>";
 							echo "<a style='float: right;' href='edit.php?notebook=".$notebook['id']."'>Edit</a>";
 							echo "<a class='delete' href='task_handler.php?type=delete&id=".$notebook['id']."'><img src='img/delete.png' style='width: 8px; float: right; margin: 3px;'></a></div>"; 
 						}
@@ -73,7 +73,7 @@ require_once('tent-markdown.php');
 
 				<div class="filters">
                 <div style="float: left;">
-                	<?php 
+                	<b><?php 
                 	if(isset($_GET['notebook'])){
                 		foreach ($notebooks['posts'] as $nb) {
                 			if ($nb['id'] == $_GET['notebook']) {
@@ -83,7 +83,7 @@ require_once('tent-markdown.php');
                 	} 
                 	else {
                 		echo "All Notes";
-                	} ?>
+                	} ?></b>
                 </div>
                 <a class="javascript-nav" rel="leanModal" href="#new_post">Create new note +</a>
                 <a class="javaless-nav" href="new_post_page.php" style="font-size: 16px;">Create new note +</a>
@@ -131,7 +131,7 @@ require_once('tent-markdown.php');
 				<div class='column-3'>
                 <div class='column-3-inner'>
 				<div class="filters" style="max-width: 721px;">
-                <div style="float: left;"><?php echo $current_note['post']['content']['title']; ?></div><a href="index.php?note=<?php echo $current_note['post']['id']; ?>&edit=true">Edit</a> | <a href="task_handler.php?type=delete&id=<?php echo $current_note['post']['id']; ?>">Delete</a>
+                <div style="float: left; font-weight: 800;"><?php echo $current_note['post']['content']['title']; ?></div><a href="index.php?note=<?php echo $current_note['post']['id']; ?>&edit=true">Edit</a> | <a href="task_handler.php?type=delete&id=<?php echo $current_note['post']['id']; ?>">Delete</a>
                 </div>
                 <div style="padding: 3%;">
                         <?php echo tent_markdown($current_note['post']['content']['body']); ?>
