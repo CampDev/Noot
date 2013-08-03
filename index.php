@@ -286,7 +286,7 @@ padding: 3%;" class="note_body"><?php echo $current_note['post']['content']['bod
                         </div>
                         <div style="padding: 3%;"><?php echo tent_markdown($current_note['post']['content']['body']); ?></div>
                     </div>
-                </div>
+                
 
 <!-- END Display note from selected notebook -->
 
@@ -313,6 +313,7 @@ padding: 3%;" class="note_body"><?php echo $current_note['post']['content']['bod
 						curl_close($ch_current);
 						$current_note = json_decode($current_note_json, true);
 						?>
+						</div>
 				<div class='column-3'>
                     <div class='column-3-inner'>
 <form align="center" method="post" action="task_handler.php?type=update&parent=<?php echo $current_note['post']['version']['id']; ?>&id=<?php echo $current_note['post']['id']; ?>" method="post">
