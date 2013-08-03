@@ -111,7 +111,6 @@ table {
 div.sidebar {
     width: 200px;
     background: rgb(240, 240, 240);
-    padding: 20px;
     height: 100%;
     border-right: 1px solid #ddd;
     float: left;

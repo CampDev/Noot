@@ -28,8 +28,7 @@ require_once('tent-markdown.php');
 
 			<div class="container">
 				<div class="sidebar">
-				<h2>Notebooks</h2>
-                    <a href="index.php">All notebooks</a>
+                    <div style='padding: 5%; margin-top: 5px; border-bottom: 1px solid #ddd;'><a href="index.php"><b>All notebooks</b></a></div>
 
 
 				<?php 
@@ -52,9 +51,9 @@ require_once('tent-markdown.php');
 						$content = $notebook['content'];
 						echo "";
 						if (!is_null($content['name'])) {
-							echo "<li><a href='index.php?notebook=".$notebook['id']."'>".$content['name']."</a>";
+							echo "<div style='width: 90%; padding: 5%; border-bottom: 1px solid #ddd;'><a href='index.php?notebook=".$notebook['id']."'>".$content['name']."</a>";
 							echo "<a style='float: right;' href='edit.php?notebook=".$notebook['id']."'>Edit</a>";
-							echo "<a class='delete' href='task_handler.php?type=delete&id=".$notebook['id']."'><img src='img/delete.png' style='width: 8px; float: right; margin: 3px;'></a></li>"; 
+							echo "<a class='delete' href='task_handler.php?type=delete&id=".$notebook['id']."'><img src='img/delete.png' style='width: 8px; float: right; margin: 3px;'></a></div>"; 
 						}
 }
 						
@@ -73,7 +72,8 @@ require_once('tent-markdown.php');
 				<div class='note-list' style="height: 100%;">
 
 				<div class="filters">
-                <a class="javascript-nav" rel="leanModal" href="#new_post" style="font-size: 16px;">Create new note +</a>
+                <div style="float: left;">"Notebook title" / "All notes"</div>
+                <a class="javascript-nav" rel="leanModal" href="#new_post">Create new note +</a>
                 <a class="javaless-nav" href="new_post_page.php" style="font-size: 16px;">Create new note +</a>
                 </div>
 
@@ -115,11 +115,22 @@ require_once('tent-markdown.php');
 						curl_close($ch_current);
 						$current_note = json_decode($current_note_json, true);
 						?>
-						<form align="center" method="task_handler.php?type=update&id=<?php echo $current_note['post']['id']; ?>" method="post">
+
+				<div class='note-list' style="height: 100%; max-width: 700px;">
+				<div class="filters" style="max-width: 674px;">
+                <div style="float: left;"><?php echo $current_note['post']['content']['title']; ?></div>Edit
+                </div>
+                <div style="padding: 20px;">
+                        <?php echo $current_note['post']['content']['body']; ?>
+                </div>
+                </div>
+
+<!--						<form align="center" method="task_handler.php?type=update&id=<?php echo $current_note['post']['id']; ?>" method="post">
 							<p><input class="note_title" type="text" name="title" value="<?php echo $current_note['post']['content']['title']; ?>" /></p>
 							<p><textarea name="body" class="note_body"><?php echo $current_note['post']['content']['body']; ?></textarea></p>
 							<p><input type="submit" value="Save changes" /></p>
 						</form>
+-->
 					<?php
 					}
 				}
