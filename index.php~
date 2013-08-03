@@ -27,9 +27,6 @@ require_once('tent-markdown.php');
 	<?php include('header.php'); ?>
 
 			<div class="container">
-
-<!-- Notebook list column -->
-
 				<div class="column-1">
                 <div class='column-1-inner'>
                     <div style='padding: 5%; margin-top: 5px; border-bottom: 1px solid #ddd;'><a href="index.php"><b>All notebooks</b></a></div>
@@ -68,13 +65,6 @@ require_once('tent-markdown.php');
 					</form></div></div>";
 					}
 				?>
-
-
-
-<!-- END Notebook list column -->
-
-
-<!-- Note list column -->
 
 
 
@@ -139,15 +129,6 @@ require_once('tent-markdown.php');
 						$current_note = json_decode($current_note_json, true);
 						?>
 
-
-<!-- END Notebook list column -->
-
-
-
-
-
-<!-- Display note from "All notebooks -->
-
 				<div class='column-3'>
                 <div class='column-3-inner'>
 				<div class="filters" style="max-width: 721px;">
@@ -158,11 +139,6 @@ require_once('tent-markdown.php');
                 </div>
                 </div>
                 </div>
-
-<!-- END Display note from "All notebooks -->
-
-<!-- Edit note from "All notebooks -->
-
 					<?php
 					}
 					elseif (isset($_GET['edit']) and $_GET['edit'] == true) { 
@@ -183,12 +159,8 @@ require_once('tent-markdown.php');
 						curl_close($ch_current);
 						$current_note = json_decode($current_note_json, true);
 						?>
-				<div class='column-3'>
-                <div class='column-3-inner'>
-				<div class="filters" style="max-width: 721px;">
-                <div style="float: left; font-weight: 800;">
 						<form align="center" method="post" action="task_handler.php?type=update&parent=<?php echo $current_note['post']['version']['id']; ?>&id=<?php echo $current_note['post']['id']; ?>" method="post">
-							<p><input class="note_title" type="text" name="title" value="<?php echo $current_note['post']['content']['title']; ?>" /></p></div></div>
+							<p><input class="note_title" type="text" name="title" value="<?php echo $current_note['post']['content']['title']; ?>" /></p>
 							<p><textarea name="body" class="note_body"><?php echo $current_note['post']['content']['body']; ?></textarea></p>
 							<p><input type="submit" value="Save changes" /></p>
 						</form>
@@ -260,32 +232,16 @@ require_once('tent-markdown.php');
 						$current_note = json_decode($current_note_json, true);
 						?>
 
-</div>
-</div>
-
-
-<!-- END Edit note -->
-
-
-
-
-<!-- Display note from selected notebook -->
-
 				<div class='column-3'>
-                    <div class='column-3-inner'>
-				        <div class="filters" style="max-width: 721px;">
-                            <div style="float: left; font-weight: 800;"><?php echo $current_note['post']['content']['title']; ?></div>
-                            <a href="index.php?notebook=<?php echo $_GET['notebook']; ?>&note=<?php echo $current_note['post']['id']; ?>&edit=true">Edit</a> | <a href="task_handler.php?type=delete&id=<?php echo $current_note['post']['id']; ?>">Delete</a>
-                        </div>
-                        <div style="padding: 3%;"><?php echo tent_markdown($current_note['post']['content']['body']); ?></div>
-                    </div>
+                <div class='column-3-inner'>
+				<div class="filters" style="max-width: 721px;">
+                <div style="float: left; font-weight: 800;"><?php echo $current_note['post']['content']['title']; ?></div><a href="index.php?notebook=<?php echo $_GET['notebook']; ?>&note=<?php echo $current_note['post']['id']; ?>&edit=true">Edit</a> | <a href="task_handler.php?type=delete&id=<?php echo $current_note['post']['id']; ?>">Delete</a>
                 </div>
-
-<!-- END Display note from selected notebook -->
-
-<!-- Edit note from selected notebook -->
-
-
+                <div style="padding: 3%;">
+                        <?php echo tent_markdown($current_note['post']['content']['body']); ?>
+                </div>
+                </div>
+                </div>
 					<?php
 					}
 					elseif (isset($_GET['edit']) and $_GET['edit'] == true) { 
@@ -307,8 +263,9 @@ require_once('tent-markdown.php');
 						$current_note = json_decode($current_note_json, true);
 						?>
 				<div class='column-3'>
-                    <div class='column-3-inner'>
-<form align="center" method="post" action="task_handler.php?type=update&parent=<?php echo $current_note['post']['version']['id']; ?>&id=<?php echo $current_note['post']['id']; ?>" method="post">
+                <div class='column-3-inner'>
+				<div class="filters" style="max-width: 721px;">
+                <div style="float: left; font-weight: 800;"><form align="center" method="post" action="task_handler.php?type=update&parent=<?php echo $current_note['post']['version']['id']; ?>&id=<?php echo $current_note['post']['id']; ?>" method="post"></div></div>
 							<p><input class="note_title" type="text" name="title" value="<?php echo $current_note['post']['content']['title']; ?>" /></p>
 							<p><textarea name="body" class="note_body"><?php echo $current_note['post']['content']['body']; ?></textarea></p>
 							<p><input type="submit" value="Save changes" /></p>
@@ -316,14 +273,10 @@ require_once('tent-markdown.php');
 					<?php }
 				}
 				?>
-</div>
-</div>
-
-<!-- END Edit note from selected notebook -->
-
-
+                </div>
+                </div>
         </div>
-        </div>
+                		</div>
 		<?php include_once('footer.php') ?>
 
 	</body>
