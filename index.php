@@ -188,9 +188,16 @@ require_once('tent-markdown.php');
 				<div class="filters" style="max-width: 721px;">
                 <div style="float: left; font-weight: 800;">
 						<form align="center" method="post" action="task_handler.php?type=update&parent=<?php echo $current_note['post']['version']['id']; ?>&id=<?php echo $current_note['post']['id']; ?>" method="post">
-							<p><input class="note_title" type="text" name="title" value="<?php echo $current_note['post']['content']['title']; ?>" /></p></div></div>
-							<p><textarea name="body" class="note_body"><?php echo $current_note['post']['content']['body']; ?></textarea></p>
-							<p><input type="submit" value="Save changes" /></p>
+							<input class="note_title" style="background: none; color: black; border: none; font-weight: 800;" type="text" name="title" value="<?php echo $current_note['post']['content']['title']; ?>" /></div>
+							<input type="submit" value="Save changes" /></div>
+							<p><textarea name="body" style="margin: auto;
+height: 500px;
+max-width: 100%;
+width: 100%;
+color: #000000;
+border: none;
+font-family: Open Sans;
+padding: 3%;" class="note_body"><?php echo $current_note['post']['content']['body']; ?></textarea></p>
 						</form>
 					<?php }
 				}
