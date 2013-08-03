@@ -83,7 +83,6 @@ require_once('functions.php');
 				?>
 				<form align="center" method="post" action="task_handler.php?type=update_notebook&id=<?php echo $current_notebook['post']['id']; ?>&parent=<?php echo $current_notebook['post']['version']['id']; ?>">
 					<p><input name="name" type="text" value="<?php echo $current_notebook['post']['content']['name']; ?>" /></p>
-					<p><textarea name="description" class="notes"><?php echo $current_notebook['post']['content']['description']; ?></textarea></p>
 					<p><input type="submit" /></p>
 				</form>
         	<?php
