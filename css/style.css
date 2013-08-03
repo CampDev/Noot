@@ -129,12 +129,15 @@ div.column-3 {
 div.column-1-inner {
     border-left: 1px solid #ddd;
     border-right: 1px solid #ddd;
+    height: 100%;
 }
 div.column-2-inner {
     border-right: 1px solid #ddd;
+    height: 100%;
 }
 div.column-3-inner {
     border-right: 1px solid #ddd;
+    height: 100%;
 }
 
 #features {
