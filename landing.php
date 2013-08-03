@@ -1,4 +1,5 @@
 <?php
+	session_name('Noot');
 	session_start();
 ?>
 <html>

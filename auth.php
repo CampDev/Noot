@@ -1,5 +1,6 @@
 <?php
 //Session Stuff #1
+session_name('Noot');
 session_start();
 require_once('functions.php');
 	if (!isset($_GET['entity']) OR $_GET['entity'] == '') {
@@ -31,7 +32,7 @@ require_once('functions.php');
 				'types' => array(
 					'write' => array('https://tent.io/types/status/v0', 'http://cacauu.de/noot/note/v0.1', 'http://cacauu.de/noot/notebook/v0.1'),
 					),
-				'redirect_uri' => 'http://dev.campnews.org/noot/redirect.php',
+				'redirect_uri' => 'http://localhost:8888/noot/redirect.php',
 				),
 			'permissions' => array('public' => false),
 		);

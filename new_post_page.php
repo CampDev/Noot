@@ -1,4 +1,5 @@
 <?php
+session_name('Noot');
 if(session_id() == '') {
 	session_start();
 }

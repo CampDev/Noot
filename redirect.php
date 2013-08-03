@@ -1,4 +1,5 @@
 <?php
+session_name('Noot');
 session_start();
 require_once('functions.php');
 		if (!isset($_GET['code'])) { //If there's no code...

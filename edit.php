@@ -1,4 +1,5 @@
 <?php
+session_name('Noot');
 session_start();
 if (!isset($_SESSION['entity'])) {
 	$error = "You're not logged in!";
