@@ -121,7 +121,7 @@ require_once('tent-markdown.php');
                 <div style="float: left;"><?php echo $current_note['post']['content']['title']; ?></div><a href="index.php?note=<?php echo $current_note['post']['id']; ?>&edit=true">Edit</a> | <a href="task_handler.php?type=delete&id=<?php echo $current_note['post']['id']; ?>">Delete</a>
                 </div>
                 <div style="padding: 20px;">
-                        <?php echo $current_note['post']['content']['body']; ?>
+                        <?php echo tent_markdown($current_note['post']['content']['body']); ?>
                 </div>
                 </div>
 
