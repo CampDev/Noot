@@ -72,7 +72,19 @@ require_once('tent-markdown.php');
                 <div class='column-2-inner'>
 
 				<div class="filters">
-                <div style="float: left;">"Notebook title" / "All notes"</div>
+                <div style="float: left;">
+                	<?php 
+                	if(isset($_GET['notebook'])){
+                		foreach ($notebooks['posts'] as $nb) {
+                			if ($nb['id'] == $_GET['notebook']) {
+                				echo $nb['content']['name'];
+                			}
+                		}
+                	} 
+                	else {
+                		echo "All Notes";
+                	} ?>
+                </div>
                 <a class="javascript-nav" rel="leanModal" href="#new_post">Create new note +</a>
                 <a class="javaless-nav" href="new_post_page.php" style="font-size: 16px;">Create new note +</a>
                 </div>
