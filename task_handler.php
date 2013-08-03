@@ -6,7 +6,7 @@
 		$entity_sub = substr_replace($_SESSION['entity'] ,"",-1);
 		$nonce = uniqid('Noot_', true);
 		if (isset($_SESSION['redirect_notebook'])) {
-			$redirect_url = 'index.php?notebook='.$_SESSION['redirect_notebook'];
+			$redirect_url = 'index.php?'.$_SESSION['redirect_notebook'];
 			unset($_SESSION['redirect_notebook']);
 		}
 		else {
@@ -162,10 +162,6 @@
 							),
 						),
 					);
-					var_export($_POST);
-					echo "<hr />";
-					var_export($updated_post_raw);
-					echo "<hr/>";
 					$updated_post = json_encode($updated_post_raw);
 					$mac = generate_mac('hawk.1.header', time(), $nonce, 'PUT', '/posts/'.urlencode($entity_sub)."/".$id, $_SESSION['entity_sub'], '80', $_SESSION['client_id'], $_SESSION['hawk_key'], false);
 					$ch = curl_init();
@@ -175,7 +171,6 @@
 					curl_setopt($ch, CURLOPT_POSTFIELDS, $updated_post);
 					curl_setopt($ch, CURLOPT_HTTPHEADER, array(generate_auth_header($_SESSION['access_token'], $mac, time(), $nonce, $_SESSION['client_id'])."\n".'Content-Type: application/vnd.tent.post.v0+json; type="http://cacauu.de/noot/note/v0.1#'.$_POST['status'].'"'));
 					$update_note = curl_exec($ch);
-					var_export($update_note);
 					curl_close($ch);
 					if (!isset($update_note['error'])) {
 						header('Location: '.$redirect_url);
