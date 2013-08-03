@@ -108,14 +108,34 @@ table {
     margin-right: 20px;
 }
 
-div.sidebar {
-    width: 200px;
+div.column-1 {
+    width: 18%;
     background: rgb(240, 240, 240);
     height: 100%;
-    border-right: 1px solid #ddd;
     float: left;
 }
-
+div.column-2 {
+    float: left;
+    max-width: 24%;
+    width: 100%;
+    height: 100%;
+}
+div.column-3 {
+    float: left;
+    max-width: 58%;
+    width: 100%;
+    height: 100%;
+}
+div.column-1-inner {
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+}
+div.column-2-inner {
+    border-right: 1px solid #ddd;
+}
+div.column-3-inner {
+    border-right: 1px solid #ddd;
+}
 
 #features {
     text-align: center;
@@ -162,7 +182,7 @@ div.header-navigation {
 }
 
 div.container {
-    max-width: 1200px;
+    max-width: 1250px;
     margin: auto;
 }
 
@@ -173,23 +193,19 @@ div.padded-container {
     margin: auto;
 }
 
-div.note-list {
-    float: left;
-    max-width: 300px;
-    width: 100%;
-    border-right: 1px solid #ddd;
-}
-
 li {
     font-size: 12px;
 }
 div.filters {
-    width: 100%;
-    max-width: 274px;
+    width: 94%;
+    max-width: 94%;
     background: rgb(245, 245, 245);
     height: 15px;
     border-bottom: 1px solid #ddd;
-    padding: 13px;
+    padding-left: 3%;
+    padding-right: 3%;
+    padding-top: 15px;
+    padding-bottom: 15px;
     text-align: right;
     font-size: 12px;
 }
@@ -280,28 +296,11 @@ padding: 10px; border: 1px solid lime; border-radius: 5px; background: #27ae60; 
 
 /* */
 @media screen and (max-width: 1000px) {
-    div.sidebar {
-        width: 19.75%;
-        padding: 1%;
-        padding-top: 20px;
-    }
-    div.note-list {
-        width: 78%;
-    }
-    div.filters {
-        width: 95%;
-        padding: 2.5%;
-    }
-    table {
-        width: 94%;
-        margin: 3%;
-    }
-
 }
 
 
 /* Mobile */
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 800px) {
 
     #feature {
         width: 96%;
