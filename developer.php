@@ -1,47 +1,27 @@
 <html>
 	<head>
 		<title>Developer Ressources - Tasky</title>
-		<link rel="stylesheet" type="text/css" href="ccs/style.css">
+		<link rel="stylesheet" type="text/css" href="css/style.css">
 	</head>
 	<body>
-   		<div class="container">
+   		<div style="margin-top: 40px;" class="container">
 		<?php
 			require_once('markdown.php');
-			$markdown = '#Tasky Post Type Documentation
+			$markdown = '#Noot Post Type Documentation
 
-Tasky uses two custom post types to store tasks and lists in your Tent account. These two post types are, of course, available for every other app to and documented below:
+To store notes and notebooks, Noot uses two post types:
 
-(Required parameters are bold, optional parameters are regular)
+##Notes 
+####URL: http://cacauu.de/noot/note/v0.1
 
-##Task 
-####URL: http://cacauu.de/tasky/task/v0.1
+* **Title (required) - Title of the note**
 
-* **Title (required) - Title describing the task**
+* **Body (required) - Body of the task, can use [Tent-flavored Markdown](https://tent.io/docs/post-types#markdown)**
 
-* **Status (required) - Status of the post *(Possible: Done, Due)***
+##Notebooks
+####URL: http://cacauu.de/noot/note/v0.1
 
-* Priority (optional) - Priority of the task *(Possible in Tasky: 0 (low), 1 (average), 2 (high), 3 (urgent); Default in Tasky: 1 (average))*
-
-* List (optional) - List for the task *(Default in Tasky: To Do)*
-
-* Tags (optional) - Tags for the task
-
-* Assigned User - (optional) - User who is assigned to *do* the task *(In the JSON: Assignee)*
-
-* Notes (optional) - Additional notes about the task
-
-* Due Date (optional) - Unix epoch of date (and time) the task is due *(In the JSON: duedate)*
-
-* Public (optional) - Public or private task *(Possible: True or False, managed through Tent permissions)*
-
-* Group (optional) - Users who are allowed to view the task *(Only for private tasks, managed through Tent mentions)*
-
-##Task List 
-####URL: http://cacauu.de/tasky/list/v0.1
-
-* **Name (required) - Title of the list, brief description**
-
-* Description (optional) - Description of the list';
+* **Name (required) - Name of the note**';
 			$html = Markdown($markdown);
 			echo $html;
 		?>
